@@ -1,0 +1,125 @@
+# Watchlist for the discovery agent. Add or remove freely — the agent reads this
+# every run. Anything not listed can still surface via the `categories` section.
+
+companies:
+  # Big tech / platforms
+  - OpenAI
+  - Anthropic
+  - Google / Google DeepMind
+  - Microsoft
+  - Meta
+  - Apple
+  - Amazon / AWS
+  - NVIDIA
+  - Salesforce
+  - Adobe
+  - Oracle
+  - IBM
+  - SAP
+  - ServiceNow
+  - Workday
+  - Intuit
+  - Uber
+  - Airbnb
+  - DoorDash
+  - Shopify
+  - Spotify
+  - Netflix
+  - Tesla
+  - Palantir
+  - Snowflake
+  - Databricks
+  - Atlassian
+  - Zoom
+  - Slack
+  - Notion
+  - Figma
+  - Canva
+  - Stripe
+  - Block / Square
+  - PayPal
+  - Plaid
+  - Coinbase
+  - Robinhood
+  - Datadog
+  - MongoDB
+  - Cloudflare
+  - Twilio
+  - HubSpot
+  - Zendesk
+  - Asana
+  - Monday.com
+  - Miro
+  - Airtable
+  - Linear
+  - GitHub
+  - GitLab
+  - Vercel
+  - Supabase
+  - Retool
+  - Okta
+  - CrowdStrike
+  - Palo Alto Networks
+  - Snyk
+  - LinkedIn
+  - Pinterest
+  - Snap
+  - Reddit
+  - TikTok / ByteDance
+  - Duolingo
+  - Instacart
+  - Rippling
+  - Deel
+  - Gusto
+  - Brex
+  - Ramp
+  - Klarna
+  - Revolut
+  - Nubank
+  - Toast
+  - Samsara
+  - Zillow
+  - Booking.com
+  - Expedia
+
+  # AI-native startups
+  - Perplexity
+  - Mistral AI
+  - Cohere
+  - Hugging Face
+  - Cursor / Anysphere
+  - Replit
+  - Sierra
+  - Harvey
+  - Glean
+  - Writer
+  - Synthesia
+  - ElevenLabs
+  - Runway
+  - Midjourney
+  - Suno
+  - LangChain
+  - LlamaIndex
+  - Weights & Biases
+  - Pinecone
+  - Together AI
+  - Groq
+  - Scale AI
+  - Abridge
+  - Ambience Healthcare
+  - Cresta
+  - Decagon
+  - Clay
+  - Lovable
+  - n8n
+
+categories:
+  - AI agents and agentic developer tooling
+  - Developer platforms and infrastructure
+  - Vertical SaaS (healthcare, legal, fintech, logistics)
+  - Fintech and payments infrastructure
+  - Data platforms, analytics and BI
+  - Security and identity
+  - Productivity and collaboration
+  - Consumer subscription products
+  - Commerce and marketplaces

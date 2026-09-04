@@ -1,0 +1,69 @@
+name: Daily Launch Analysis
+
+on:
+  schedule:
+    # 13:00 UTC = 06:00 US Pacific (PDT) / 05:00 (PST).
+    # GitHub's scheduler can lag 5-20 minutes under load; that's expected.
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Analyze without emailing or recording"
+        type: boolean
+        default: false
+
+concurrency:
+  group: daily-launch-analysis
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run agent
+        id: agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          DISCOVERY_MODEL: ${{ vars.DISCOVERY_MODEL }}
+          ANALYSIS_MODEL: ${{ vars.ANALYSIS_MODEL }}
+          LOOKBACK_DAYS: ${{ vars.LOOKBACK_DAYS }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: |
+          python -m agent.main ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      - name: Commit archive
+        if: steps.agent.outputs.status == 'sent'
+        run: |
+          git config user.name "launch-analyst-bot"
+          git config user.email "actions@github.com"
+          git add reports data/registry.json
+          if git diff --staged --quiet; then
+            echo "Nothing to commit."
+          else
+            git commit -m "analysis: ${{ steps.agent.outputs.company }} — ${{ steps.agent.outputs.product }}"
+            git push
+          fi
